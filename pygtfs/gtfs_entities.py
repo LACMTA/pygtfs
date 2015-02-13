@@ -22,11 +22,6 @@ from sqlalchemy.orm import relationship, validates, synonym
 
 Base = declarative_base()
 metadata = Base.metadata
-print( "{{{{{{{{{{{{{{{{{{ metadata }}}}}}}}}}}}}}}}}}")
-print(metadata.info)
-for t in metadata.sorted_tables:
-	print(t.name)
-print( "{{{{{{{{{{{{{{{{{{ end metadata }}}}}}}}}}}}}}}}}}")
 
 def _validate_date(*field_names):
 	@validates(*field_names)
@@ -130,13 +125,6 @@ class Agency(Base):
 
 	def __repr__(self):
 		return '<Agency %s: %s>' % (self.agency_id, self.agency_name)
-
-# routestops = Table('routestops', Base.metadata,
-# 	Column('routestops_id', Integer, primary_key=True),
-# 	Column('stop_id', Unicode, ForeignKey('stops.stop_id')),
-# 	Column('route_id', Unicode, ForeignKey('routes.route_id')),
-# 	info={'bind_key': 'gtfs'},
-# )
 
 class Stop(Base):
 	__tablename__ = 'stops'
