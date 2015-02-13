@@ -204,13 +204,15 @@ class Route(Base):
 		return '<Route %s: %s>' % (self.route_id, self.route_short_name)
 		
 	def _get_stops(self):
-		"""We need direct access to the stops. This query will get them for us:
+		"""
+			We need direct access to the stops. This query will get them for us:
+			
 			SELECT DISTINCT stops.stop_id, stops.stop_name
 			FROM trips
 			INNER JOIN stop_times ON stop_times.trip_id = trips.trip_id
 			INNER JOIN stops ON stops.stop_id = stop_times.stop_id
 			WHERE route_id = <route_id>;
-		"
+		"""
 		return object_session(self).query(Stop).join(Trip).join(StopTime).with_parent(self).filter(stop_times.trip_id == trips.trip_id).filter(stops.stop_id == stop_times.stop_id).all()
 	
 	# stuff the results in this property
